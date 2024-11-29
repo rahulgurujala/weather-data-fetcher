@@ -3,6 +3,7 @@ from pathlib import Path
 from app.core.database import init_db
 from app.utils.logger import setup_logger
 from app.config import LOCATIONS_CSV_PATH
+from app.models.weather import Location, WeatherData  # noqa
 
 logger = setup_logger(__name__)
 

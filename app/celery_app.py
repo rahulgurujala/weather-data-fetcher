@@ -1,5 +1,6 @@
 from celery import Celery
 from app.config import CELERY_CONFIG
+from app.models.weather import Location, WeatherData  # noqa
 
 # Initialize Celery
 celery_app = Celery("weather_app")
