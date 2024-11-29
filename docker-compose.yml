@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  worker:
+    build: .
+    volumes:
+      - .:/app
+      - ./logs:/var/log/celery-weather-app
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - PYTHONPATH=/app
+      - ENVIRONMENT=production
+    command: celery -A app.tasks worker --loglevel=info
+
+  beat:
+    build: .
+    volumes:
+      - .:/app
+      - ./logs:/var/log/celery-weather-app
+    depends_on:
+      redis:
+        condition: service_healthy
+      worker:
+        condition: service_started
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - PYTHONPATH=/app
+      - ENVIRONMENT=production
+    command: celery -A app.tasks beat --loglevel=info
+
+  scheduler:
+    build: .
+    volumes:
+      - .:/app
+      - ./logs:/var/log/celery-weather-app
+    depends_on:
+      redis:
+        condition: service_healthy
+      worker:
+        condition: service_started
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - PYTHONPATH=/app
+      - ENVIRONMENT=production
+    command: python -m app.main
+
+volumes:
+  redis_data:
