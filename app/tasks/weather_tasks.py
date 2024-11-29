@@ -1,15 +1,14 @@
-from typing import List, Dict, Any
-from celery import chord
+from typing import Any, Dict, List
+
 from sqlalchemy.orm import Session
 
 from app.celery_app import celery_app
+from app.config import RETRY_CONFIG
 from app.core.database import get_db
 from app.core.weather import WeatherClient
 from app.models.weather import Location, WeatherData
 from app.schemas.weather import LocationCreate, WeatherDataCreate
-from app.utils.csv_handler import CSVHandler
 from app.utils.logger import setup_logger
-from app.config import LOCATIONS_CSV_PATH, RETRY_CONFIG
 
 logger = setup_logger(__name__)
 
@@ -61,7 +60,8 @@ def save_weather_data(results: List[Dict[str, Any]]) -> Dict[str, Any]:
     Callback task to save weather data to database.
 
     Args:
-        results: List of dictionaries containing weather data and location information
+        results: List of dictionaries containing weather data and location
+        information
 
     Returns:
         Dictionary containing summary of the operation
@@ -86,7 +86,8 @@ def save_weather_data(results: List[Dict[str, Any]]) -> Dict[str, Any]:
                 else:
                     error_count += 1
                     logger.error(
-                        f"Failed to process weather data: {result.get('error')}"
+                        f"Failed to process weather data: \
+                        {result.get('error')}"
                     )
 
             except Exception as e:

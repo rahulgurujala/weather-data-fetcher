@@ -1,6 +1,7 @@
-import csv
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 import pandas as pd
+
 from app.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -25,7 +26,8 @@ class CSVHandler:
             # Convert DataFrame to list of dictionaries
             locations = df.to_dict("records")
             logger.info(
-                f"Successfully read {len(locations)} locations from {file_path}"
+                f"Successfully read {len(locations)} locations from \
+                    {file_path}"
             )
             return locations
         except Exception as e:

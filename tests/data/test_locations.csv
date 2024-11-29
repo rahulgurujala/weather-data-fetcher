@@ -1,0 +1,3 @@
+city,latitude,longitude,country,timezone
+TestCity1,51.5074,-0.1278,TestCountry1,Europe/London
+TestCity2,40.7128,-74.0060,TestCountry2,America/New_York

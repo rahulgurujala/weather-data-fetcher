@@ -1,5 +1,6 @@
 from celery import Celery
-from app.config import CELERY_CONFIG, REDIS_URL
+
+from app.config import CELERY_CONFIG
 
 # Initialize Celery
 celery_app = Celery("weather_app")

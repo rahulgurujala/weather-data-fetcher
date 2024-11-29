@@ -1,8 +1,9 @@
-from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import sessionmaker, declarative_base
-from sqlalchemy.orm import Session
-from typing import Generator
 from contextlib import contextmanager
+from typing import Generator
+
+from sqlalchemy import MetaData, create_engine
+from sqlalchemy.orm import Session, declarative_base, sessionmaker
+
 from app.config import DATABASE_URL
 from app.utils.logger import setup_logger
 

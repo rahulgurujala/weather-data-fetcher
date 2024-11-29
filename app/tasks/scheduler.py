@@ -1,8 +1,10 @@
 from celery import chord
+
 from app.celery_app import celery_app
+from app.config import LOCATIONS_CSV_PATH
 from app.utils.csv_handler import CSVHandler
 from app.utils.logger import setup_logger
-from app.config import LOCATIONS_CSV_PATH
+
 from .weather_tasks import fetch_weather_for_location, save_weather_data
 
 logger = setup_logger(__name__)

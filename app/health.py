@@ -1,7 +1,8 @@
-from sqlalchemy import text
-from app.core.database import get_db
 import redis
+from sqlalchemy import text
+
 from app.config import REDIS_URL
+from app.core.database import get_db
 
 
 def check_database():

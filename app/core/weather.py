@@ -1,9 +1,11 @@
-import requests
-from typing import Dict, Any
+from typing import Any, Dict
 from urllib.parse import urljoin
-from app.config import OPEN_METEO_API_URL, API_TIMEOUT, WEATHER_PARAMS
-from app.utils.retry import retry_with_backoff
+
+import requests
+
+from app.config import API_TIMEOUT, OPEN_METEO_API_URL, WEATHER_PARAMS
 from app.utils.logger import setup_logger
+from app.utils.retry import retry_with_backoff
 
 logger = setup_logger(__name__)
 
@@ -48,7 +50,8 @@ class WeatherClient:
 
             data = response.json()
             logger.info(
-                f"Successfully fetched weather data for coordinates: {latitude}, {longitude}"
+                f"Successfully fetched weather data for coordinates: \
+                    {latitude}, {longitude}"
             )
             return data
 
@@ -80,7 +83,8 @@ class WeatherClient:
                 )
             except Exception as e:
                 logger.error(
-                    f"Failed to fetch weather for location {location}: {str(e)}"
+                    f"Failed to fetch weather for location \
+                        {location}: {str(e)}"
                 )
                 results.append({"location": location, "error": str(e)})
 

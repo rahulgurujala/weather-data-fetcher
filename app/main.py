@@ -1,9 +1,10 @@
 import sys
 from pathlib import Path
-from app.core.database import init_db
-from app.utils.logger import setup_logger
-from app.tasks.scheduler import update_weather_data
+
 from app.config import LOCATIONS_CSV_PATH
+from app.core.database import init_db
+from app.tasks.scheduler import update_weather_data
+from app.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
 

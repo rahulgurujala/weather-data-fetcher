@@ -1,6 +1,7 @@
-from functools import wraps
 import time
+from functools import wraps
 from typing import Callable
+
 from app.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -35,9 +36,10 @@ def retry_with_backoff(
                     retry_count += 1
                     if retry_count == retries:
                         logger.error(
-                            f"Max retries ({retries}) reached for {func.__name__}"
+                            f"Max retries ({retries}) reached for \
+                                {func.__name__}"
                         )
-                        raise
+                        raise e
 
                     logger.warning(
                         f"Attempt {retry_count} failed for {func.__name__}. "
