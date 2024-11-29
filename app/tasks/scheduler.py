@@ -21,6 +21,8 @@ def update_weather_data() -> None:
         csv_handler = CSVHandler()
         locations = csv_handler.read_locations(LOCATIONS_CSV_PATH)
 
+        logger.info(f"Read {len(locations)} locations from CSV: {locations}")
+
         if not locations:
             logger.warning("No locations found in CSV file")
             return

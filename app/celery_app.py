@@ -1,5 +1,4 @@
 from celery import Celery
-
 from app.config import CELERY_CONFIG
 
 # Initialize Celery
@@ -8,10 +7,11 @@ celery_app = Celery("weather_app")
 # Configure Celery
 celery_app.conf.update(CELERY_CONFIG)
 
-# Optional: Add any beat schedule if needed
+# Configure the periodic tasks
 celery_app.conf.beat_schedule = {
     "update-weather-data": {
-        "task": "app.tasks.update_weather_data",
-        "schedule": 3600.0,  # Run every hour
-    },
+        "task": "app.tasks.scheduler.update_weather_data",
+        "schedule": 60.0,  # Every 60 seconds
+        "options": {"queue": "weather_tasks"},
+    }
 }

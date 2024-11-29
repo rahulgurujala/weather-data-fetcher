@@ -31,11 +31,13 @@ def fetch_weather_for_location(
         Dictionary containing weather data and location information
     """
     try:
+        logger.info(f"Fetching weather for location: {location_data}")
         weather_client = WeatherClient()
         weather_data = weather_client.get_weather(
             latitude=location_data["latitude"],
             longitude=location_data["longitude"],
         )
+        logger.info(f"Received weather data: {weather_data}")
 
         return {
             "location": location_data,
@@ -68,7 +70,7 @@ def save_weather_data(results: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     success_count = 0
     error_count = 0
-
+    logger.info(f"Attempting to save results: {results}")
     with get_db() as db:
         for result in results:
             try:
